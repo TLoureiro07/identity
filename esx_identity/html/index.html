@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
+  <title>Create ID</title>
+
+
+</head>
+
+<body>
+<div id="app">
+  <div class="container2" v-if="showui">
+    <div id="left-side" class="col-6">
+      <!-- Conteúdo do lado esquerdo -->
+      <div class="welcomelogo">
+        <img src="./images/logo.png" alt="Descrição da imagem">
+        <h1 style="margin-top: 3%;">{{Translation["WELCOME"]}}</h1>
+        <h2>{{Translation["INFO"]}}</h2>
+      </div>
+    </div>
+
+
+    <div id="right-side" class="col-6">
+
+      <div class="form-container">
+        <h2 style="font-size: 23px;">Create Character</h2>
+        <p style="font-weight: 600; margin-bottom: 13px; text-transform: uppercase; font-size: 14px;">Identity</p>
+        <form>
+          <div class="row" style="height: 50px; width: 100%; margin: auto;">
+            <div class="col-md rounded-lg flex flex-col border transition-colors ease-out"
+              style="background-color: black;
+              height: 63px;
+              flex-basis: 0;
+              flex-grow: 1;">
+              <label for="first-name-1">{{Translation["FIRSTNAME"]}}</label>
+              <input :class="firstnameClass" v-model="firstname" class="firstnameinput" style="margin-top: 22%;
+              font-size: 13px;"
+                type="text" :placeholder="Translation['ENTER_NAME']"
+                onkeypress="if (app.isNumber(event) == true) return false;" :onKeyUp="checkFirstName()"
+                :onmouseup="checkFirstName()">
+            </div>
+            <div
+              class="col-md bg-black/80 px-[1.8vh] py-[1.6vh] rounded-lg flex flex-col border transition-colors ease-out"
+              style="background-color: black; height: 63px; margin-left: 2%;flex-basis: 0; flex-grow: 1;">
+              <label for="last-name-1">{{Translation["LASTNAME"]}}</label>
+              <input v-model="lastname" :class="lastnameClass" style="margin-top: 22%;
+              font-size: 13px;" class="firstnameinput"
+                type="text" :placeholder="Translation['ENTER_LASTNAME']"
+                onkeypress="if (app.isNumber(event) == true) return false;" :onKeyUp="checkLastname()"
+                :onmouseup="checkLastname()">
+            </div>
+          </div>
+
+          <div class="row" style="height: 76px; width: 100%; margin: auto; margin-top: 7%;">
+            <div style="background-color: black; height: 73px;"
+              class="col-md-12 bg-black/80 px-[1.8vh] py-[1.6vh] rounded-lg flex flex-col border transition-colors ease-out"
+              id="birthday">
+              <label for="first-name-2">{{Translation["BIRTHDAY"]}}</label>
+              <input class="firstnameinput" :class="dobClass" v-model="dob" type="date" dateformat="M d y"
+                onkeypress="if ( isNaN(String.fromCharCode(event.keyCode) )) return false;" :onchange="checkDOB()"
+                :onKeyUp="checkDOB()" :onmouseup="checkDOB()" placeholder="MM/DD/YY">
+            </div>
+          </div>
+
+          <div class="row" style="width: 100%;margin: auto;">
+            <div
+              class="col-md-12 bg-black/80 px-[1.8vh] py-[1.6vh] rounded-lg flex flex-col border transition-colors ease-out"
+              style="    background-color: black;
+              margin-top: 3%;
+              width: 90%;
+              height: 66px;
+              flex: 0 0 100%;
+              max-width: 100%;">
+              <label for="first-name-2">{{Translation["HEIGHT"]}}</label>
+              <div class="SizeWrapper">
+                <div id="heightnumber" class="zero">{{minHeight}}</div>
+                <input class="setHeightInput" :style="GetHeightInputStyle" v-model="heightSize" :min="minHeight"
+                  step="1" :max="maxHeight" type="range">
+
+                <div id="heightnumber" class="one">{{maxHeight}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="row bg-black/80 px-[1.8vh] py-[1.6vh] rounded-lg flex flex-col border transition-colors ease-out"
+            style="background-color: black; width: 100%;
+        margin: auto;
+        margin-top: 3%;
+        height: 73px;">
+            <div class="col-md-6" style="flex: 0 0 50%; max-width: 50%;">
+              <label for="first-name-2">{{Translation["GENDER"]}}</label>
+              <div class="malebutton " @click="SetGender('m')" :class="{active:selectedGender == 'm'}">
+                <img src="./images/gender-male.png" alt="">
+                <p>{{Translation["MALE"]}}</p>
+              </div>
+            </div>
+            <div class="col-md-6" style="flex: 0 0 50%; max-width: 50%;">
+              <div class="malebutton" @click="SetGender('f')" :class="{active:selectedGender == 'f'}">
+                <img style="height: 17px; width: 12px;" src="./images/gender-female.png" alt="">
+                <p>{{Translation["FEMALE"]}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="submitbutton" @click="Register"><button>{{Translation["SUBMIT"]}}</button></div>
+            </div>
+          </div>
+          <div class="row"></div>
+          <div class="idcard">
+            <div class="container1">
+              <div class="card-top">
+                <h2 style="font-size: 12px; color: #000000; margin-top: 2%; font-weight: bold;">
+                  {{Translation["LOS_SANTOS"]}} ,
+                  {{Translation["CITIZENSHIP_CARD"]}}</h2>
+              </div>
+              <div class="card-bottom">
+                <div class="card-bottom-section">
+                  <div class="kimlik-foto">
+                    <img :src="discordImage" class="discordFoto">
+                  </div>
+                  <p style="font-size: 14px;
+                margin-top: 3%;
+                color: black;
+                margin-left: 3%;">{{GetFirstname}} {{GetLastname.substring(0,1)+'.'}}</p>
+                </div>
+                <div class="card-bottom-section">
+                  <p style="font-size: 12px; font-weight: bold; color: black;">{{Translation["NAME"]}}</p>
+                  <p style="font-size: 12px;color: black;">{{GetFirstname}} {{GetLastname}}</p>
+                  <p style="font-size: 12px; font-weight: bold;color: black;">{{Translation["BIRTHDAY"]}}</p>
+                  <p style="font-size: 12px;color: black;">{{GetDob}}</p>
+                </div>
+                <div class="card-bottom-section">
+                  <p style="font-size: 12px; font-weight: bold;color: black;">{{Translation["HEIGHT"]}}</p>
+                  <p style="font-size: 12px;color: black; ">{{heightSize}} cm</p>
+                  <p style="font-size: 12px; font-weight: bold;color: black;">{{Translation["GENDER"]}}</p>
+                  <p style="font-size: 12px;color: black;">{{selectedGender == 'm' ? Translation["MALE"] :
+                    Translation["FEMALE"]}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="script.js"></script>
+<script>
+
+
+</script>
+</html>
