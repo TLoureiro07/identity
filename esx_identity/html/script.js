@@ -280,9 +280,10 @@ const app = new Vue({
 				return false;
 			}
 		},
+		
 		checkFirstName() {
 			var value = this.firstname;
-			if (value.trim().match(/^[a-zA-ZÀ-ÿ][0-9a-zA-ZÀ-ÿ .,'-]*$/) == null) {
+			if (value.trim().match(/^[a-zA-Z][0-9a-zA-Z .,'-]*$/) == null) {
 				this.firstnameClass = 'error'
 				return false
 
@@ -302,7 +303,7 @@ const app = new Vue({
 		},
 		checkLastname() {
 			var value = this.lastname;
-			if (value.trim().match(/^[a-zA-ZÀ-ÿ][0-9a-zA-ZÀ-ÿ .,'-]*$/) == null) {
+			if (value.trim().match(/^[a-zA-Z][0-9a-zA-Z .,'-]*$/) == null) {
 				this.lastnameClass = 'error'
 				return false
 

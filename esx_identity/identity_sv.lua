@@ -1,5 +1,5 @@
-RegisterServerEvent('codem-identity:server:ShowIdentity')
-AddEventHandler('codem-identity:server:ShowIdentity', function(targetId, data, type)
+RegisterServerEvent('stoned-identity:server:ShowIdentity')
+AddEventHandler('stoned-identity:server:ShowIdentity', function(targetId, data, type)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
     if xPlayer then
@@ -40,10 +40,10 @@ AddEventHandler('codem-identity:server:ShowIdentity', function(targetId, data, t
                 data.licensesText = licensesText
 
 
-                TriggerClientEvent('codem-identity:client:ShowIdentity', targetId, type, data)
+                TriggerClientEvent('stoned-identity:client:ShowIdentity', targetId, type, data)
             end)
         else
-            TriggerClientEvent('codem-identity:client:ShowIdentity', targetId, type, data)
+            TriggerClientEvent('stoned-identity:client:ShowIdentity', targetId, type, data)
         end
     end
 end)

@@ -109,8 +109,8 @@ function deleteIdentityFromDatabase(xPlayer)
         MySQL.update.await('UPDATE addon_account_data SET money = 0 WHERE account_name IN (?) AND owner = ?',
             {{'bank_savings', 'caution'}, xPlayer.identifier})
 
-        MySQL.prepare.await('UPDATE datastore_data SET data = ? WHERE name IN (?) AND owner = ?',
-            {'\'{}\'', {'user_ears', 'user_glasses', 'user_helmet', 'user_mask'}, xPlayer.identifier})
+       -- MySQL.prepare.await('UPDATE datastore_data SET data = ? WHERE name IN (?) AND owner = ?',
+            --{'\'{}\'', {'user_ears', 'user_glasses', 'user_helmet', 'user_mask'}, xPlayer.identifier})
     end
 end
 
@@ -316,13 +316,16 @@ if not multichar then
         if resource == GetCurrentResourceName() then
             Wait(300)
             while not ESX do Wait(0) end
-            local xPlayers = ESX.GetExtendedPlayers()
-            for i=1, #(xPlayers) do
-                if xPlayers[i] then
-                    checkIdentity(xPlayers[i])
+            local players = ESX.GetPlayers()
+            for i=1, #players do
+                local playerId = players[i]
+                local xPlayer = ESX.GetPlayerFromId(playerId)
+                if xPlayer then
+                    checkIdentity(xPlayer)
                 end
             end
         end
+        
     end)
 	RegisterNetEvent('esx:playerLoaded', function(playerId, xPlayer)
 		local currentIdentity = playerIdentity[xPlayer.identifier]
