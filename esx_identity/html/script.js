@@ -76,7 +76,7 @@ const app = new Vue({
 	},
 	computed: {
 		GetFirstname() {
-			if (this.firstname.length > 0) {
+			if (this.firstname.length > 0 && this.firstname.length < 13) {
 				return this.firstname
 			} else {
 				return 'Loureiro'
@@ -90,7 +90,7 @@ const app = new Vue({
 			}
 		},
 		GetLastname() {
-			if (this.lastname && this.lastname.length > 0) {
+			if (this.lastname && this.lastname.length > 0 && this.firstname.length < 13) {
 				return this.lastname
 			} else {
 				return 'Neves'
