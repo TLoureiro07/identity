@@ -3,7 +3,7 @@ Config                  = {}
 ---------------- | GERAL | ---------------------------------
 Config.Locale = GetConvar('esx:locale', 'en')
 
-Config.CharCreator = 'esx_skin' -- 'esx_skin' OR 'vms_charcreator'
+Config.CharCreator = 'esx_skin' -- 'esx_skin' OR 'vms_charcreator' 
 
 ---------------- | IMAGES | ---------------------------------
 Config.BotToken = 'ODg3NDY2Njk0OTI1MjMwMTYw.GmnbQ1.3s2-N5CzYlWwOq34EUwUgIIy8w7nMU7rXSaGGE'  -- Tutotal to create -> https://www.youtube.com/watch?v=-m-Z7Wav-fM

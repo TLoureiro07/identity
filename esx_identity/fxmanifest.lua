@@ -1,7 +1,7 @@
 fx_version 'adamant'
 game 'gta5'
 author 'Loureiro#0111'
-version '1.0.0'
+version '1.3'
 shared_script '@es_extended/imports.lua'
 
 shared_scripts {

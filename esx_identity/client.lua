@@ -109,8 +109,27 @@ RegisterNUICallback('register', function(data, cb)
             if not ESX.GetConfig().Multichar then
                 if  Config.CharCreator == 'vms_charcreator' then
                     TriggerEvent('vms_charcreator:openCreator', data.sex)
-                else
+                elseif Config.CharCreator == 'esx_skin' then
                     TriggerEvent('esx_skin:playerRegistered')
+                elseif Config.CharCreator == 'fivem-appearance' then
+                    local config = {
+                        ped = true,
+                        headBlend = true,
+                        faceFeatures = true,
+                        headOverlays = true,
+                        components = true,
+                        props = true,
+                        allowExit = true,
+                        tattoos = true
+                    }
+                    
+                    exports['fivem-appearance']:startPlayerCustomization(function (appearance)
+                        if (appearance) then
+                        print('Saved')
+                        else
+                        print('Canceled')
+                        end
+                    end, config)
                 end
             end
         end
